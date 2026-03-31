@@ -142,7 +142,7 @@ Endpoints mock principais:
 
 ### Tela de Cartoes
 
-![Tela de Cartoes](docs/screenshots/cartoes.png)
+![Tela de Cartoes](public/lista-cartoes.png)
 
 ### Tela de Carrinho
 

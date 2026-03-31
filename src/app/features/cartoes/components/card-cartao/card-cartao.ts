@@ -1,6 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { Cartao } from '../../../../core/models/cartao.model';
+import { Cartao } from '@core/models/cartao.model';
 
 @Component({
   selector: 'app-card-cartao',
