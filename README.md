@@ -32,6 +32,7 @@ A aplicacao simula um sistema de aquisicao de cartoes, contendo as seguintes fun
 - SCSS
 - Node.js
 - pnpm
+- json-server (mock de API local)
 - Vitest (testes unitarios)
 
 ## Estrutura do Projeto
@@ -45,6 +46,22 @@ monolito-cartoes/
 |  |  |- app.scss
 |  |  |- app.routes.ts
 |  |  |- app.config.ts
+|  |  |- features/
+|  |  |  |- cartoes/
+|  |  |  |  |- cartoes.ts
+|  |  |  |  |- cartoes.html
+|  |  |  |  |- cartoes.scss
+|  |  |  |  |- cartoes.spec.ts
+|  |  |  |  |- cartoes-module.ts
+|  |  |  |- carrinho/
+|  |  |  |  |- carrinho.ts
+|  |  |  |  |- carrinho.html
+|  |  |  |  |- carrinho.scss
+|  |  |  |  |- carrinho.spec.ts
+|  |  |  |  |- carrinho-module.ts
+|  |  |- core/
+|  |  |  |- data/
+|  |  |  |  |- db.json
 |  |- main.ts
 |  |- main.server.ts
 |  |- server.ts
@@ -76,9 +93,41 @@ pnpm start
 
 A aplicacao ficara disponivel em `http://localhost:4200`.
 
+### Ambiente de Desenvolvimento com Mock API
+
+Para subir o frontend Angular e o mock server juntos:
+
+```bash
+pnpm dev
+```
+
+Servicos disponiveis:
+
+- Frontend: `http://localhost:4200`
+- Mock API (json-server): `http://localhost:3000`
+
+Endpoints mock principais:
+
+- `http://localhost:3000/cartoes`
+- `http://localhost:3000/carrinho`
+
+## Telas
+
+### Tela de Cartoes
+
+![Tela de Cartoes](docs/screenshots/cartoes.png)
+
+### Tela de Carrinho
+
+![Tela de Carrinho](docs/screenshots/carrinho.png)
+
+> Observacao: caso as imagens ainda nao existam no repositorio, adicione os arquivos em `docs/screenshots/` com os nomes `cartoes.png` e `carrinho.png`.
+
 ## Scripts Disponiveis
 
 - `pnpm start`: sobe o servidor de desenvolvimento.
+- `pnpm predev`: libera as portas `4200` e `3000` antes de iniciar o ambiente completo.
+- `pnpm dev`: sobe frontend Angular + mock API (`json-server`) em paralelo.
 - `pnpm build`: gera o build da aplicacao.
 - `pnpm watch`: gera build em modo observacao (development).
 - `pnpm test`: executa os testes unitarios.
