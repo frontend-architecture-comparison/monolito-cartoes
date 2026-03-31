@@ -21,9 +21,23 @@ Caracteristicas principais:
 
 A aplicacao simula um sistema de aquisicao de cartoes, contendo as seguintes funcionalidades:
 
-- Listagem de cartoes disponiveis
+- Listagem de cartoes disponiveis com loading state
 - Adicao de cartoes ao carrinho
 - Visualizacao e remocao de itens do carrinho
+
+## Timeline de Desenvolvimento
+
+### Feature: Lista de Cartões (feature/lista-cartoes)
+
+Atualizações recentes implementadas:
+
+- **Modelo centralizado**: Interface `Cartao` extraída para `core/models/cartao.model.ts` para reutilização em todo o projeto
+- **Variáveis SCSS**: Cores em variáveis globais para consistência visual (primary, white, text-muted, shadow)
+- **Componente Card**: Template do card vinculado aos dados do input signal `cartao`
+- **Formatação monetária**: Pipe currency configurado para BRL com locale pt-BR
+- **Componente Loading**: Novo componente reutilizável em `shared/components/loading` com animação de pulsação
+- **Signals**: Refatoração do componente Cartoes para usar signals (loading state, cartoes list)
+- **Tipagem forte**: Remoção de `any` em favor de tipos explícitos
 
 ## Tecnologias Utilizadas
 
@@ -52,16 +66,29 @@ monolito-cartoes/
 |  |  |  |  |- cartoes.html
 |  |  |  |  |- cartoes.scss
 |  |  |  |  |- cartoes.spec.ts
-|  |  |  |  |- cartoes-module.ts
+|  |  |  |  |- components/
+|  |  |  |  |  |- card-cartao/
+|  |  |  |  |  |  |- card-cartao.ts
+|  |  |  |  |  |  |- card-cartao.html
+|  |  |  |  |  |  |- card-cartao.scss
+|  |  |  |  |  |  |- card-cartao.spec.ts
 |  |  |  |- carrinho/
 |  |  |  |  |- carrinho.ts
 |  |  |  |  |- carrinho.html
 |  |  |  |  |- carrinho.scss
 |  |  |  |  |- carrinho.spec.ts
-|  |  |  |  |- carrinho-module.ts
 |  |  |- core/
+|  |  |  |- models/
+|  |  |  |  |- cartao.model.ts
+|  |  |  |- services/
+|  |  |  |  |- lista-cartoes/
+|  |  |  |  |  |- lista-cartoes.ts
 |  |  |  |- data/
 |  |  |  |  |- db.json
+|  |  |- shared/
+|  |  |  |- components/
+|  |  |  |  |- loading/
+|  |  |  |  |  |- loading.ts
 |  |- main.ts
 |  |- main.server.ts
 |  |- server.ts
@@ -143,6 +170,33 @@ pnpm build
 ```bash
 pnpm test
 ```
+
+## Padrões e Boas Práticas
+
+### Componentes
+
+- **Standalone Components**: Todos os componentes utilizam a API standalone (sem NgModules)
+- **Signals**: Utilizados para gerenciar estado local e comunicação entre componentes
+- **Input Signal**: Propriedades tipadas com `input()` e `input.required()` em lugar de `@Input`
+- **Change Detection**: Strategy `OnPush` implícita com signals
+- **Pipe Currency**: Formatação de valores monetários em BRL com locale pt-BR
+
+### Estilos
+
+- **SCSS Modules**: Variáveis reutilizáveis para cores e espaçamentos
+- **Mixin de Estilos**: Reutilização de padrões comuns (ex: subtitle)
+- **Object-fit**: Imagens centralizadas em containers fixos sem distorção
+
+### Serviços
+
+- **Injeção de Dependência**: Via `inject()` function em lugar de constructor injection
+- **Tipagem**: Métodos de serviço retornam tipos explícitos (`Observable<Cartao[]>`)
+- **Providência**: Singleton services com `providedIn: 'root'`
+
+### Modelos
+
+- **Interfaces Centralizadas**: Modelos em `core/models/` para reutilização em toda a aplicação
+- **Type Safety**: Remoção de `any` em favor de tipos explícitos
 
 ## Contexto Academico
 

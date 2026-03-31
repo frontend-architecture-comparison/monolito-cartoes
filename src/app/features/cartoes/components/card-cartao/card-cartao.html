@@ -25,5 +25,5 @@
     <p>{{ cartao().anuidade | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
   </section>
 
-  <button>Selecionar este cartão</button>
+  <button (click)="selectCartao()">Selecionar este cartão</button>
 </section>
