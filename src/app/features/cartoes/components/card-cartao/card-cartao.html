@@ -1,26 +1,26 @@
 <section class="card">
   <header>
     <img
-      src="https://passageirodeprimeira.com/wp-content/uploads/2025/08/amazon-prime-mastercard-platinum-cbcccardprime-high-230x146.png"
-      alt="">
-    <p>Casas Bahia Visa</p>
+      [src]="cartao().img"
+      [alt]="cartao().nome">
+    <p>{{ cartao().nome }}</p>
   </header>
 
   <section class="content-fatura">
     <article>
       <p>Limite total</p>
-      <p>R$ 1.000,00</p>
+      <p>{{ cartao().limiteTotal | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
     </article>
 
     <article>
       <p>Limite promocional</p>
-      <p>R$ 1.000,00</p>
+      <p>{{ cartao().limitePromocional | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
     </article>
   </section>
 
   <section class="content-anuidade">
     <p>Anuidade</p>
-    <p>R$ 100,00</p>
+    <p>{{ cartao().anuidade | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
   </section>
 
   <button>Selecionar este cartão</button>

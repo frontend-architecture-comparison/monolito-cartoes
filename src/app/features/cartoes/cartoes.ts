@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CardCartao } from "./components/card-cartao/card-cartao";
 import { ListaCartoes } from '../../core/services/lista-cartoes/lista-cartoes';
+import { Cartao } from '../../core/models/cartao.model';
 
 @Component({
   selector: 'app-cartoes',
@@ -11,16 +12,19 @@ import { ListaCartoes } from '../../core/services/lista-cartoes/lista-cartoes';
 })
 export class Cartoes implements OnInit {
 
-  private readonly cartoes = inject(ListaCartoes);
+  private readonly cartoesService = inject(ListaCartoes);
+
+  cartoes: Cartao[] = [];
 
   ngOnInit(): void {
     this.getlistaCartoes();
   }
 
   getlistaCartoes() {
-    this.cartoes.getlistaCartoes().subscribe({
+    this.cartoesService.getlistaCartoes().subscribe({
       next: (cartoes) => {
         console.log('Cartões disponíveis:', cartoes);
+        this.cartoes = cartoes;
       },
       error: (error) => {
         console.error('Error fetching cartoes:', error);

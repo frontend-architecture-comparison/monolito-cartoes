@@ -1,14 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-
-interface Cartao {
-  id: number;
-  img: string;
-  nome: string;
-  limiteTotal: number;
-  limitePromocional: number;
-  anuidade: number;
-}
+import { Cartao } from '../../models/cartao.model';
 
 @Injectable({
   providedIn: 'root',

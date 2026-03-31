@@ -1,5 +1,7 @@
 <section class="lista-cartoes">
   <h1>Cartões disponíveis</h1>
 
-  <app-card-cartao />
+  @for (cartao of cartoes; track cartao.id) {
+    <app-card-cartao [cartao]="cartao" />
+  }
 </section>
