@@ -1,7 +1,7 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { CardCartao } from "./components/card-cartao/card-cartao";
 import { ListaCartoes } from '../../core/services/lista-cartoes/lista-cartoes';
-import { Cartao } from '../../core/models/cartao.model';
+import { Cartao } from '@core/models/cartao.model';
 import { LoadingComponent } from '../../shared/components/loading/loading';
 
 @Component({
