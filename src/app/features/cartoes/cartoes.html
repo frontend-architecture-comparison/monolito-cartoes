@@ -1,7 +1,15 @@
 <section class="lista-cartoes">
   <h1>Cartões disponíveis</h1>
 
-  @for (cartao of cartoes; track cartao.id) {
-    <app-card-cartao [cartao]="cartao" />
+  @if (loading()) {
+    <app-loading message="Carregando cartões..." />
+  } @else {
+    @if (cartoes().length > 0) {
+      @for (cartao of cartoes(); track cartao.id) {
+        <app-card-cartao [cartao]="cartao" />
+      }
+    } @else {
+      <p>Nenhum cartão disponível.</p>
+    }
   }
 </section>
