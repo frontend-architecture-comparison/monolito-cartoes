@@ -10,4 +10,8 @@ import { Cartao } from '../../../../core/models/cartao.model';
 })
 export class CardCartao {
   cartao = input.required<Cartao>();
+
+  selectCartao(){
+    alert(`Cartão selecionado: ${this.cartao().nome}`);
+  }
 }
