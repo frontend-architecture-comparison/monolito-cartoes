@@ -1,0 +1,29 @@
+<section class="card">
+  <header>
+    <div>
+      <img
+        [src]="cartao().img"
+        [alt]="cartao().nome">
+    </div>
+    <p>{{ cartao().nome }}</p>
+  </header>
+
+  <section class="content-fatura">
+    <article>
+      <p>Limite total</p>
+      <p>{{ cartao().limiteTotal | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
+    </article>
+
+    <article>
+      <p>Limite promocional</p>
+      <p>{{ cartao().limitePromocional | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
+    </article>
+  </section>
+
+  <section class="content-anuidade">
+    <p>Anuidade</p>
+    <p>{{ cartao().anuidade | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
+  </section>
+
+  <button>Selecionar este cartão</button>
+</section>
