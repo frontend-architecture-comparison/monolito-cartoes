@@ -1,3 +1,19 @@
+$color-primary: #007bff;
+$color-white: #fff;
+
 h1, h2, h3, h4, h5, h6, p, a, span, div {
   font-family: "Open Sans", sans-serif;
+}
+
+header {
+  background-color: $color-primary;
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+  h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: $color-white;
+  }
 }
