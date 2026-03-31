@@ -4,6 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "predev": "kill-port 4200 3000",
+    "dev": "concurrently -k \"ng serve --port 4200\" \"json-server src/app/core/data/db.json --port 3000\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -30,7 +32,10 @@
     "@angular/compiler-cli": "^21.2.0",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
+    "concurrently": "^9.2.1",
     "jsdom": "^28.0.0",
+    "json-server": "1.0.0-beta.15",
+    "kill-port": "^2.0.1",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
