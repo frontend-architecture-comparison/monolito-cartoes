@@ -1,6 +1,12 @@
 <main>
   <header>
     <h1>Aquisição de cartões</h1>
+    <a class="cart-link" href="/carrinho" (click)="goToCart($event)" aria-label="Ir para o carrinho">
+      <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+      @if (carrinhoState.quantidade() > 0) {
+        <span class="cart-badge" aria-label="Itens no carrinho">{{ carrinhoState.quantidade() }}</span>
+      }
+    </a>
   </header>
   
   <section>
