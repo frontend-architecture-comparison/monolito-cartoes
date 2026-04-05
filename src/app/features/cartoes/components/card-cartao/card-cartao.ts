@@ -19,6 +19,10 @@ export class CardCartao {
   cartao = input.required<Cartao>();
   modalAberto = signal(false);
 
+  redirectToCarrinho(): void {
+    this.router.navigate(['/carrinho', this.cartao().id]);
+  }
+
   abrirModal(): void {
     this.modalAberto.set(true);
   }
@@ -35,6 +39,6 @@ export class CardCartao {
   irParaCarrinho(): void {
     this.carrinhoState.adicionarItem();
     this.fecharModal();
-    this.router.navigate(['/carrinho']);
+    this.router.navigate(['/carrinho', this.cartao().id]);
   }
 }

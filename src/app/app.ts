@@ -1,5 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { computed, Component, inject } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { filter, map } from 'rxjs';
 import { CarrinhoState } from '@core/services/carrinho-state/carrinho-state';
 
 @Component({
@@ -12,8 +14,17 @@ import { CarrinhoState } from '@core/services/carrinho-state/carrinho-state';
 export class App {
   private readonly router = inject(Router);
   protected readonly carrinhoState = inject(CarrinhoState);
+  private readonly currentUrl = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map(() => this.router.url),
+    ),
+    { initialValue: this.router.url },
+  );
 
-  protected readonly title = signal('monolito-cartoes');
+  protected readonly title = computed(() =>
+    this.currentUrl().startsWith('/carrinho') ? 'Carrinho' : '',
+  );
 
   goToCart(event: Event): void {
     event.preventDefault();
