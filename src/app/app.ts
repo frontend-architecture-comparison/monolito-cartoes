@@ -3,11 +3,12 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { CarrinhoState } from '@core/services/carrinho-state/carrinho-state';
+import { HeaderComponent } from '@shared/components/header/header';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -40,13 +41,11 @@ export class App {
     this.currentUrl().startsWith('/carrinho'),
   );
 
-  goToCart(event: Event): void {
-    event.preventDefault();
+  goToCart(): void {
     this.router.navigate(['/carrinho']);
   }
 
-  goToHome(event: Event): void {
-    event.preventDefault();
+  goToHome(): void {
     this.router.navigate(['/home']);
   }
 }

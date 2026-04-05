@@ -1,24 +1,11 @@
 <main>
-  <header>
-    <div class="header-left">
-      @if (isCarrinhoRoute()) {
-        <a class="back-link" href="/home" (click)="goToHome($event)" aria-label="Voltar para home">
-          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
-        </a>
-      }
-
-      @if (title()) {
-        <h1>{{ title() }}</h1>
-      }
-    </div>
-
-    <a class="cart-link" href="/carrinho" (click)="goToCart($event)" aria-label="Ir para o carrinho">
-      <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
-      @if (carrinhoState.quantidade() > 0) {
-        <span class="cart-badge" aria-label="Itens no carrinho">{{ carrinhoState.quantidade() }}</span>
-      }
-    </a>
-  </header>
+  <app-header
+    [title]="title()"
+    [showBack]="isCarrinhoRoute()"
+    [cartQuantidade]="carrinhoState.quantidade()"
+    (homeClicked)="goToHome()"
+    (cartClicked)="goToCart()"
+  ></app-header>
   
   <section>
     <router-outlet></router-outlet>
