@@ -36,8 +36,17 @@ export class App {
     }
   });
 
+  protected readonly isCarrinhoRoute = computed(() =>
+    this.currentUrl().startsWith('/carrinho'),
+  );
+
   goToCart(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/carrinho']);
+  }
+
+  goToHome(event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/home']);
   }
 }
