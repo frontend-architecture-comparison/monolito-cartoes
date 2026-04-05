@@ -2,7 +2,6 @@ import { CurrencyPipe } from '@angular/common';
 import { Component, inject, input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cartao } from '@core/models/cartao.model';
-import { CarrinhoState } from '@core/services/carrinho-state/carrinho-state';
 import { ModalComponent } from '@shared/components/modal/modal';
 
 @Component({
@@ -14,7 +13,6 @@ import { ModalComponent } from '@shared/components/modal/modal';
 })
 export class CardCartao {
   private readonly router = inject(Router);
-  private readonly carrinhoState = inject(CarrinhoState);
 
   cartao = input.required<Cartao>();
   modalAberto = signal(false);
@@ -37,7 +35,6 @@ export class CardCartao {
   }
 
   irParaCarrinho(): void {
-    this.carrinhoState.adicionarItem();
     this.fecharModal();
     this.router.navigate(['/carrinho', this.cartao().id]);
   }
