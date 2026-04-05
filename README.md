@@ -365,9 +365,6 @@ pnpm test --coverage
 ### Home - Lista de Cartoes
 ![Tela de Cartoes](public/lista-cartoes.png)
 
-### Modal de Confirmacao
-![Modal de Cartao](public/modal-cartao.png)
-
 ### Carrinho
 ![Tela de Carrinho](public/carrinho.png)
 
