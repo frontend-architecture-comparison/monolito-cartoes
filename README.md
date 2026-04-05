@@ -1,102 +1,162 @@
 # Monolito - Aplicacao de Aquisicao de Cartoes
 
-Este repositorio contem a implementacao de uma aplicacao web desenvolvida em arquitetura monolitica, como parte do Trabalho de Conclusao de Curso (TCC) em Engenharia de Software.
+Repositorio contendo a implementacao de uma aplicacao web desenvolvida em arquitetura monolitica, como parte do Trabalho de Conclusao de Curso (TCC) em Engenharia de Software.
 
 ## Objetivo
 
-A aplicacao foi desenvolvida com o objetivo de servir como base para comparacao com uma arquitetura baseada em micro front-ends, permitindo a analise de aspectos relacionados a desempenho, escalabilidade e organizacao estrutural.
+A aplicacao foi desenvolvida como base para comparacao com uma arquitetura baseada em micro front-ends, permitindo analise de aspectos relacionados a desempenho, escalabilidade e organizacao estrutural.
 
 ## Arquitetura
 
-A aplicacao segue o modelo de arquitetura monolitica, sendo estruturada em um unico projeto Angular, com organizacao interna baseada em modulos por funcionalidade.
+A aplicacao segue o modelo de arquitetura monolitica, estruturada em um unico projeto Angular com organizacao interna baseada em modulos por funcionalidade (feature-based).
 
-Caracteristicas principais:
+**Caracteristicas principais:**
 
 - Aplicacao unica (single application)
 - Build e deploy unificados
 - Modulos internos organizados por dominio
+- Componentes reutilizaveis em camadas compartilhadas
 - Alto acoplamento entre as partes da aplicacao
+
+### Organizacao em Camadas
+
+#### **Core** (`src/app/core/`)
+Camada responsavel pela logica de negocio e acesso a dados:
+- **Models**: Definicoes de interfaces (`Cartao`, `ItemCarrinho`, `LojaCarrinho`)
+- **Services**: 
+  - `ListaCartoes` - Busca e filtro de cartoes disponiveis
+  - `CarrinhoState` - Gerenciamento do estado do carrinho
+- **Data**: Mock database (`db.json`) com dados de cartoes
+
+#### **Features** (`src/app/features/`)
+Modulos de funcionalidades especificas:
+
+**Cartoes** (`cartoes/`)
+- Listagem de cartoes disponiveis
+- Componente `CardCartao` para exibicao individual
+- Modal de confirmacao de selecao
+- Loading state durante carregamento
+
+**Carrinho** (`carrinho/`)
+- Visualizacao de itens selecionados
+- Componente `LojaCarrinhoCard` para renderizacao de lojas
+- Calculo automatico de totais
+- Persistencia de carrinho
+
+#### **Shared** (`src/app/shared/`)
+Componentes e utilitarios reutilizaveis:
+- **Loading** - Componente com animacao de carregamento
+- **Modal** - Componente generico para dialogos
 
 ## Funcionalidades
 
-A aplicacao simula um sistema de aquisicao de cartoes, contendo as seguintes funcionalidades:
+A aplicacao simula um sistema de aquisicao de cartoes com:
 
-- Listagem de cartoes disponiveis com loading state
-- Adicao de cartoes ao carrinho
-- Visualizacao e remocao de itens do carrinho
-
-## Timeline de Desenvolvimento
-
-### Feature: Lista de Cartões (feature/lista-cartoes)
-
-Atualizações recentes implementadas:
-
-- **Modelo centralizado**: Interface `Cartao` extraída para `core/models/cartao.model.ts` para reutilização em todo o projeto
-- **Variáveis SCSS**: Cores em variáveis globais para consistência visual (primary, white, text-muted, shadow)
-- **Componente Card**: Template do card vinculado aos dados do input signal `cartao`
-- **Formatação monetária**: Pipe currency configurado para BRL com locale pt-BR
-- **Componente Loading**: Novo componente reutilizável em `shared/components/loading` com animação de pulsação
-- **Signals**: Refatoração do componente Cartoes para usar signals (loading state, cartoes list)
-- **Tipagem forte**: Remoção de `any` em favor de tipos explícitos
+- Listagem paginada de cartoes disponiveis com loading state
+- Selecao e adicao de cartoes ao carrinho
+- Modal de confirmacao com detalhes completos do cartao
+- Visualizacao do carrinho com itens selecionados agrupados por loja
+- Calculo automatico de totais e quantidade de itens
+- Formatacao monetaria em BRL com Intl.NumberFormat
+- Navegacao entre telas (home → carrinho → checkout)
+- Roteamento lazy-loaded para optimal performance
+- Tipagem forte com TypeScript
+- Componentes standalone (Angular 21)
 
 ## Tecnologias Utilizadas
 
-- Angular 21
-- TypeScript
-- SCSS
-- Node.js
-- pnpm
-- json-server (mock de API local)
-- Vitest (testes unitarios)
+| Tecnologia | Versao | Proposito |
+|-----------|--------|----------|
+| Angular | 21 | Framework frontend |
+| TypeScript | ~5.9 | Linguagem de programacao |
+| SCSS | - | Pre-processador CSS |
+| RxJS | ~7.8 | Programacao reativa |
+| Node.js | 20+ | Runtime JavaScript |
+| pnpm | 10+ | Gerenciador de pacotes |
+| json-server | - | Mock de API REST local |
+| Vitest | ^4.0 | Testes unitarios |
+| Express | ^5.1 | Server-side rendering |
+
+
 
 ## Estrutura do Projeto
 
-```text
+```
 monolito-cartoes/
-|- src/
-|  |- app/
-|  |  |- app.ts
-|  |  |- app.html
-|  |  |- app.scss
-|  |  |- app.routes.ts
-|  |  |- app.config.ts
-|  |  |- features/
-|  |  |  |- cartoes/
-|  |  |  |  |- cartoes.ts
-|  |  |  |  |- cartoes.html
-|  |  |  |  |- cartoes.scss
-|  |  |  |  |- cartoes.spec.ts
-|  |  |  |  |- components/
-|  |  |  |  |  |- card-cartao/
-|  |  |  |  |  |  |- card-cartao.ts
-|  |  |  |  |  |  |- card-cartao.html
-|  |  |  |  |  |  |- card-cartao.scss
-|  |  |  |  |  |  |- card-cartao.spec.ts
-|  |  |  |- carrinho/
-|  |  |  |  |- carrinho.ts
-|  |  |  |  |- carrinho.html
-|  |  |  |  |- carrinho.scss
-|  |  |  |  |- carrinho.spec.ts
-|  |  |- core/
-|  |  |  |- models/
-|  |  |  |  |- cartao.model.ts
-|  |  |  |- services/
-|  |  |  |  |- lista-cartoes/
-|  |  |  |  |  |- lista-cartoes.ts
-|  |  |  |- data/
-|  |  |  |  |- db.json
-|  |  |- shared/
-|  |  |  |- components/
-|  |  |  |  |- loading/
-|  |  |  |  |  |- loading.ts
-|  |- main.ts
-|  |- main.server.ts
-|  |- server.ts
-|  |- styles.scss
-|- public/
-|- angular.json
-|- package.json
-|- tsconfig.json
+├── src/
+│   ├── app/
+│   │   ├── app.ts                          # Componente raiz
+│   │   ├── app.html                        # Template raiz
+│   │   ├── app.scss                        # Estilos globais
+│   │   ├── app.config.ts                   # Configuracao da app
+│   │   ├── app.routes.ts                   # Roteamento principal
+│   │   │
+│   │   ├── core/                           # Camada de negocio
+│   │   │   ├── models/
+│   │   │   │   └── cartao.model.ts         # Interface Cartao
+│   │   │   ├── services/
+│   │   │   │   ├── lista-cartoes/
+│   │   │   │   │   ├── lista-cartoes.ts
+│   │   │   │   │   └── lista-cartoes.spec.ts
+│   │   │   │   └── carrinho-state/
+│   │   │   │       └── carrinho-state.ts   # Gerenciamento de estado
+│   │   │   └── data/
+│   │   │       └── db.json                 # Mock data
+│   │   │
+│   │   ├── features/                       # Funcionalidades
+│   │   │   ├── cartoes/
+│   │   │   │   ├── cartoes.ts              # Componente principal
+│   │   │   │   ├── cartoes.html
+│   │   │   │   ├── cartoes.scss
+│   │   │   │   ├── cartoes.spec.ts
+│   │   │   │   ├── cartoes-module.ts
+│   │   │   │   └── components/
+│   │   │   │       └── card-cartao/        # Card individual
+│   │   │   │           ├── card-cartao.ts
+│   │   │   │           ├── card-cartao.html
+│   │   │   │           ├── card-cartao.scss
+│   │   │   │           └── card-cartao.spec.ts
+│   │   │   │
+│   │   │   └── carrinho/
+│   │   │       ├── carrinho.ts             # Componente carrinho
+│   │   │       ├── carrinho.html
+│   │   │       ├── carrinho.scss
+│   │   │       ├── carrinho.spec.ts
+│   │   │       ├── carrinho.model.ts       # Tipos carrinho
+│   │   │       ├── carrinho-module.ts
+│   │   │       └── components/
+│   │   │           └── loja-carrinho-card/ # Card de loja
+│   │   │               ├── loja-carrinho-card.ts
+│   │   │               ├── loja-carrinho-card.html
+│   │   │               ├── loja-carrinho-card.scss
+│   │   │               └── loja-carrinho-card.module.ts
+│   │   │
+│   │   └── shared/                         # Componentes compartilhados
+│   │       └── components/
+│   │           ├── loading/
+│   │           │   ├── loading.ts
+│   │           │   ├── loading.html
+│   │           │   └── loading.scss
+│   │           └── modal/
+│   │               ├── modal.ts
+│   │               ├── modal.html
+│   │               └── modal.scss
+│   │
+│   ├── main.ts                             # Entry point
+│   ├── main.server.ts                      # SSR entry point
+│   ├── server.ts                           # Express server
+│   └── styles.scss                         # Styles globais
+│
+├── public/                                 # Assets estaticos
+│   └── *.png                               # Screenshots
+│
+├── angular.json                            # Configuracao Angular CLI
+├── package.json                            # Dependencias e scripts
+├── tsconfig.json                           # Configuracao TypeScript
+├── tsconfig.app.json                       # Config TypeScript app
+├── tsconfig.spec.json                      # Config TypeScript tests
+├── pnpm-lock.yaml                          # Lock de dependencias
+└── README.md                               # Este arquivo
 ```
 
 ## Como Executar o Projeto
@@ -106,104 +166,235 @@ monolito-cartoes/
 - Node.js 20+
 - pnpm 10+
 
-### Instalacao
+### Instalacao de Dependencias
 
 ```bash
 pnpm install
 ```
 
-### Ambiente de Desenvolvimento
+### Desenvolvimento
 
+**Apenas frontend (Angular):**
 ```bash
 pnpm start
 ```
+Acesse: `http://localhost:4200`
 
-A aplicacao ficara disponivel em `http://localhost:4200`.
-
-### Ambiente de Desenvolvimento com Mock API
-
-Para subir o frontend Angular e o mock server juntos:
-
+**Frontend + Mock API (recomendado):**
 ```bash
 pnpm dev
 ```
-
-Servicos disponiveis:
-
 - Frontend: `http://localhost:4200`
-- Mock API (json-server): `http://localhost:3000`
+- Mock API: `http://localhost:3000`
 
-Endpoints mock principais:
-
-- `http://localhost:3000/cartoes`
-- `http://localhost:3000/carrinho`
-
-## Telas
-
-### Tela de Cartoes
-
-![Tela de Cartoes](public/lista-cartoes.png)
-![Tela de Cartoes + Modal](public/modal-cartoes.png)
-
-### Tela de Carrinho
-
-![Tela de Carrinho](docs/screenshots/carrinho.png)
-
-> Observacao: caso as imagens ainda nao existam no repositorio, adicione os arquivos em `docs/screenshots/` com os nomes `cartoes.png` e `carrinho.png`.
-
-## Scripts Disponiveis
-
-- `pnpm start`: sobe o servidor de desenvolvimento.
-- `pnpm predev`: libera as portas `4200` e `3000` antes de iniciar o ambiente completo.
-- `pnpm dev`: sobe frontend Angular + mock API (`json-server`) em paralelo.
-- `pnpm build`: gera o build da aplicacao.
-- `pnpm watch`: gera build em modo observacao (development).
-- `pnpm test`: executa os testes unitarios.
-
-## Build de Producao
+### Build de Producao
 
 ```bash
 pnpm build
 ```
 
-## Testes
+Gera a build otimizada em `dist/monolito-cartoes/`
 
+### Server-Side Rendering
+
+```bash
+pnpm start:ssr
+```
+
+### Testes
+
+Executar testes unitarios:
 ```bash
 pnpm test
 ```
 
-## Padrões e Boas Práticas
+**Arquivos de teste:**
+- `app.spec.ts` - Testes do componente raiz
+- `lista-cartoes.spec.ts` - Testes do servico
+- `cartoes.spec.ts` - Testes do componente cartoes
+- `carrinho.spec.ts` - Testes do componente carrinho
+- `card-cartao.spec.ts` - Testes do card
 
-### Componentes
+## Scripts Disponiveis
 
-- **Standalone Components**: Todos os componentes utilizam a API standalone (sem NgModules)
-- **Signals**: Utilizados para gerenciar estado local e comunicação entre componentes
-- **Input Signal**: Propriedades tipadas com `input()` e `input.required()` em lugar de `@Input`
-- **Change Detection**: Strategy `OnPush` implícita com signals
-- **Pipe Currency**: Formatação de valores monetários em BRL com locale pt-BR
+| Script | Descricao |
+|--------|-----------|
+| `pnpm start` | Sobe servidor de desenvolvimento |
+| `pnpm build` | Gera build de producao |
+| `pnpm watch` | Build em modo observacao |
 
-### Estilos
 
-- **SCSS Modules**: Variáveis reutilizáveis para cores e espaçamentos
-- **Mixin de Estilos**: Reutilização de padrões comuns (ex: subtitle)
-- **Object-fit**: Imagens centralizadas em containers fixos sem distorção
+## Fluxo de Dados
 
-### Serviços
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     App (Root Component)                     │
+│                  Gerencia navegacao global                   │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+            ┌────────────┴────────────┐
+            ▼                         ▼
+      ┌──────────────┐         ┌──────────────┐
+      │ Cartoes      │         │ Carrinho     │
+      │ (home)       │         │ (details)    │
+      └────────┬─────┘         └────┬─────────┘
+               │                    │
+               ▼                    ▼
+        ┌─────────────┐      ┌─────────────┐
+        │CardCartao   │      │LojaCarrinho │
+        │Component    │      │ Card Componet
+        └──────┬──────┘      └─────────────┘
+               │
+         ┌─────┴──────┐
+         ▼            ▼
+    ┌────────┐  ┌─────────┐
+    │ Modal  │  │ Loading │
+    │Shared  │  │ Shared  │
+    └────────┘  └─────────┘
 
-- **Injeção de Dependência**: Via `inject()` function em lugar de constructor injection
-- **Tipagem**: Métodos de serviço retornam tipos explícitos (`Observable<Cartao[]>`)
-- **Providência**: Singleton services com `providedIn: 'root'`
+SERVICES:
+  ┌──────────────────────────────────────┐
+  │ ListaCartoes (Core Service)          │
+  │ - Busca de cartoes                   │
+  │ - Filtros e paginacao                │
+  └──────────────────────────────────────┘
+  
+  ┌──────────────────────────────────────┐
+  │ CarrinhoState (Core Service)         │
+  │ - Gerenciamento de estado            │
+  │ - Calculo de totais                  │
+  └──────────────────────────────────────┘
+```
 
-### Modelos
+## Componentes Principais
 
-- **Interfaces Centralizadas**: Modelos em `core/models/` para reutilização em toda a aplicação
-- **Type Safety**: Remoção de `any` em favor de tipos explícitos
+### Cartoes Feature
+
+**`Cartoes` (Container)**
+- Responsavel por buscar e listar cartoes
+- Gerencia loading state
+- Usa servico `ListaCartoes`
+
+**`CardCartao` (Presentational)**
+- Exibe um cartao individual
+- Modal de confirmacao integrado
+- Formatacao de valores monetarios
+
+### Carrinho Feature
+
+**`Carrinho` (Container)**
+- Busca dados do carrinho pela rota
+- Calcula totais e quantidade de itens
+- Renderiza lista de lojas
+
+**`LojaCarrinhoCard` (Presentational)**
+- Exibe loja com seus itens
+- Renderiza grid de produtos
+- Calcula subtotais
+
+### Shared Components
+
+**`Loading`**
+- Animacao de carregamento reutilizavel
+- Customizavel com mensagem
+
+**`Modal`**
+- Dialogo generico reutilizavel
+- Slots para conteudo customizado
+- Controle de abertura/fechamento
+
+## Roteamento
+
+A aplicacao usa roteamento lazy-loaded para otimizar o bundle:
+
+```typescript
+path: 'home'              → Cartoes (lazy-loaded)
+path: 'carrinho'          → Carrinho vazio
+path: 'carrinho/:id'      → Carrinho com items do cartao selecionado
+path: ''                  → Redirect para 'home'
+```
+
+## Dados Mock
+
+**API Local (json-server):**
+```
+GET /cartoes       - Lista de cartoes disponiveis
+GET /cartoes/:id   - Cartao especifico
+```
+
+**Estrutura Cartao:**
+```typescript
+{
+  id: string;
+  nome: string;
+  img: string;
+  limiteTotal: number;
+  limitePromocional: number;
+  anuidade: number;
+}
+```
+
+## Padroes Utilizados
+
+- **Signals** - State management moderno do Angular
+- **Services** - Separacao de responsabilidades
+- **Standalone Components** - Componentes modernos sem NgModule
+- **Lazy Loading** - Carregamento sob demanda de features
+- **Strong Typing** - TypeScript com tipos explicitos
+- **Reactive Programming** - RxJS para operacoes assincronas
+- **Feature-Based Organization** - Estrutura por funcionalidade
+- **DRY** - Componentes reutilizaveis (Card, Modal, Loading)
+
+## Testes
+
+A aplicacao inclui testes unitarios com Vitest:
+
+```bash
+# Executar todos os testes
+pnpm test
+
+# Modo watch
+pnpm test --watch
+
+# Com coverage
+pnpm test --coverage
+```
+
+## Telas
+
+### Home - Lista de Cartoes
+![Tela de Cartoes](public/lista-cartoes.png)
+
+### Modal de Confirmacao
+![Modal de Cartao](public/modal-cartao.png)
+
+### Carrinho
+![Tela de Carrinho](public/carrinho.png)
 
 ## Contexto Academico
 
 Este projeto compoe o estudo comparativo entre abordagens arquiteturais no frontend:
 
-- Monolito (este repositorio)
-- Micro front-ends (repositorio comparativo)
+- **Monolito** (este repositorio) - Aplicacao unica
+- **Micro Front-ends** (repositorio comparativo) - Multiplas aplicacoes
 
-O foco da analise e avaliar impacto em manutencao, evolucao e organizacao do codigo ao longo do desenvolvimento.
+O foco da analise e avaliar o impacto em manutencao, evolucao e organizacao do codigo ao longo do desenvolvimento.
+
+## Versao
+
+- **Angular**: 21
+- **TypeScript**: 5.9
+- **Node**: 20+
+- **pnpm**: 10+
+
+## Contribuicao
+
+Este e um projeto academico de TCC. Para duvidas ou sugestoes, consulte a documentacao do projeto.
+
+## Contato
+
+Para informacoes sobre este projeto, entre em contato com o desenvolvedor responsavel pelo TCC.
+
+---
+
+**Ultima atualizacao:** Abril de 2026
