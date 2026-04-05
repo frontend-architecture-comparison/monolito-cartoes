@@ -1,5 +1,5 @@
 export interface Cartao {
-  id: number;
+  id: string | number;
   img: string;
   nome: string;
   limiteTotal: number;

@@ -25,7 +25,7 @@
     <p>12x {{ cartao().anuidade | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
   </section>
 
-  <button (click)="abrirModal()">Selecionar este cartão</button>
+  <button (click)="redirectToCarrinho()">Selecionar este cartão</button>
 </section>
 
 <app-modal

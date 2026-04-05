@@ -16,4 +16,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/carrinho/carrinho').then((m) => m.Carrinho),
   },
+  {
+    path: 'carrinho/:id',
+    loadComponent: () =>
+      import('./features/carrinho/carrinho').then((m) => m.Carrinho),
+  },
 ];

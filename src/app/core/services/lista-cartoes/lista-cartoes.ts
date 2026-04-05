@@ -13,4 +13,8 @@ export class ListaCartoes {
   getlistaCartoes() {
     return this.http.get<Cartao[]>(this.url_api);
   }
+
+  getCartaoPorId(id: string) {
+    return this.http.get<Cartao>(`${this.url_api}/${id}`);
+  }
 }
