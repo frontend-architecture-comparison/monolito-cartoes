@@ -22,9 +22,19 @@ export class App {
     { initialValue: this.router.url },
   );
 
-  protected readonly title = computed(() =>
-    this.currentUrl().startsWith('/carrinho') ? 'Carrinho' : '',
-  );
+  protected readonly title = computed(() => {
+    const url = this.currentUrl();
+
+    switch (true) {
+      case url === '/':
+      case url.startsWith('/home'):
+        return 'Home';
+      case url.startsWith('/carrinho'):
+        return 'Carrinho';
+      default:
+        return '';
+    }
+  });
 
   goToCart(event: Event): void {
     event.preventDefault();
