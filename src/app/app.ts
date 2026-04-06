@@ -3,11 +3,12 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { CarrinhoState } from '@core/services/carrinho-state/carrinho-state';
+import { HeaderComponent } from '@shared/components/header/header';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -22,12 +23,29 @@ export class App {
     { initialValue: this.router.url },
   );
 
-  protected readonly title = computed(() =>
-    this.currentUrl().startsWith('/carrinho') ? 'Carrinho' : '',
+  protected readonly title = computed(() => {
+    const url = this.currentUrl();
+
+    switch (true) {
+      case url === '/':
+      case url.startsWith('/home'):
+        return 'Home';
+      case url.startsWith('/carrinho'):
+        return 'Carrinho';
+      default:
+        return '';
+    }
+  });
+
+  protected readonly isCarrinhoRoute = computed(() =>
+    this.currentUrl().startsWith('/carrinho'),
   );
 
-  goToCart(event: Event): void {
-    event.preventDefault();
+  goToCart(): void {
     this.router.navigate(['/carrinho']);
+  }
+
+  goToHome(): void {
+    this.router.navigate(['/home']);
   }
 }

@@ -1,14 +1,17 @@
-<article class="store-card" aria-label="Loja no carrinho">
+<section class="store-card" aria-label="Loja no carrinho">
 	<div class="store-items">
 		@for (item of loja().itens; track item.nome) {
 			<div class="item-row">
 				<div class="item-info">
-					<div class="item-heading">
+					<header class="item-heading">
 						<img class="item-thumb" [src]="item.imagem" [alt]="item.nome" width="88" height="56" />
 						<h3>{{ item.nome }}</h3>
-					</div>
+						<button class="trash-btn" type="button" aria-label="Remover item do carrinho" (click)="removerItem()">
+							<i class="fa-solid fa-trash" aria-hidden="true"></i>
+						</button>
+					</header>
 
-					<div class="values-list" aria-label="Detalhes do cartão">
+					<article class="values-list" aria-label="Detalhes do cartão">
 						<p>
 							<span>Limite total</span>
 							<strong>{{ formatarMoeda(item.limiteTotal) }}</strong>
@@ -21,14 +24,23 @@
 							<span>Anuidade</span>
 							<strong>{{ formatarMoeda(item.anuidade) }}</strong>
 						</p>
-					</div>
+					</article>
 
-					<div class="item-bottom">
-						<p>12x</p>
-						<strong>{{ formatarMoeda(item.anuidade) }}</strong>
-					</div>
+					<footer>
+						<div class="item-bottom">
+							<p>12x</p>
+							<strong>{{ formatarMoeda(item.anuidade) }}</strong>
+						</div>
+
+						<app-quantity-selector
+							[quantity]="item.quantidade"
+							[minQuantity]="1"
+							(incremented)="onQuantidadeAlterada($event)"
+							(decremented)="onQuantidadeAlterada($event)"
+						></app-quantity-selector>
+					</footer>
 				</div>
 			</div>
 		}
 	</div>
-</article>
+</section>
