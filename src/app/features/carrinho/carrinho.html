@@ -13,8 +13,13 @@
 		</section>
 	} @else {
 		<section class="content-card-cartao" aria-label="Lojas no carrinho">
-			@for (loja of lojas(); track loja.nome) {
-				<app-loja-carrinho-card [loja]="loja"></app-loja-carrinho-card>
+			@for (loja of lojas(); track loja.nome; let i = $index) {
+				<app-loja-carrinho-card 
+					[loja]="loja"
+					[lojaIndex]="i"
+					(quantidadeAlterada)="onQuantidadeAlterada($event)"
+					(itemRemovido)="onItemRemovido($event)"
+				></app-loja-carrinho-card>
 			}
 		</section>
 
@@ -24,7 +29,7 @@
 				<strong>{{ formatarMoeda(totalSelecionado()) }}</strong>
 			</div>
 
-			<button class="checkout-btn" type="button">Continuar ({{ itensSelecionados() }})</button>
+			<button class="checkout-btn" type="button">Finalizar ({{ itensSelecionados() }})</button>
 		</footer>
 	}
 </main>

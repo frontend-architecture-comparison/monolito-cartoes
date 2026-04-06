@@ -5,13 +5,13 @@ import { catchError, map, of, switchMap } from 'rxjs';
 import { Cartao } from '@core/models/cartao.model';
 import { ListaCartoes } from '@core/services/lista-cartoes/lista-cartoes';
 import { CarrinhoState } from '@core/services/carrinho-state/carrinho-state';
-import { LojaCarrinhoCardModule } from './components/loja-carrinho-card/loja-carrinho-card.module';
 import { LojaCarrinho } from './carrinho.model';
+import { LojaCarrinhoCard } from './components/loja-carrinho-card/loja-carrinho-card';
 
 @Component({
   selector: 'app-carrinho',
   standalone: true,
-  imports: [LojaCarrinhoCardModule],
+  imports: [LojaCarrinhoCard],
   templateUrl: './carrinho.html',
   styleUrl: './carrinho.scss',
 })
@@ -19,6 +19,7 @@ export class Carrinho {
   private readonly route = inject(ActivatedRoute);
   private readonly listaCartoes = inject(ListaCartoes);
   private readonly carrinhoState = inject(CarrinhoState);
+  private ultimoIdProcessado: string | null = null;
 
   readonly loading = signal(true);
   readonly erro = signal(false);
@@ -27,13 +28,16 @@ export class Carrinho {
   readonly lojas = computed<LojaCarrinho[]>(() => {
     const cartoes = this.cartoesSelecionados();
     const itensCarrinho = this.carrinhoState.itens();
+    const idsSelecionados = Object.keys(itensCarrinho);
 
-    if (cartoes.length === 0) {
+    if (cartoes.length === 0 || idsSelecionados.length === 0) {
       return [];
     }
 
-    return cartoes.map((cartao) => {
-      const quantidade = itensCarrinho[String(cartao.id)] ?? 1;
+    return cartoes
+      .filter((cartao) => idsSelecionados.includes(String(cartao.id)))
+      .map((cartao) => {
+      const quantidade = itensCarrinho[String(cartao.id)];
 
       return {
         nome: cartao.nome,
@@ -44,7 +48,7 @@ export class Carrinho {
             limiteTotal: cartao.limiteTotal,
             limitePromocional: cartao.limitePromocional,
             anuidade: cartao.anuidade,
-            quantidade,
+            quantidade: quantidade ?? 0,
           },
         ],
       };
@@ -70,7 +74,8 @@ export class Carrinho {
       .pipe(
         map((params) => params.get('id')),
         switchMap((id) => {
-          if (id) {
+          if (id && id !== this.ultimoIdProcessado) {
+            this.ultimoIdProcessado = id;
             this.carrinhoState.adicionarItem(id);
           }
 
@@ -114,5 +119,29 @@ export class Carrinho {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(valor);
+  }
+
+  atualizarQuantidade(cartaoId: string | number, novaQuantidade: number): void {
+    this.carrinhoState.atualizarQuantidade(cartaoId, novaQuantidade);
+  }
+
+  onQuantidadeAlterada(evento: { lojaIndex: number; novaQuantidade: number }): void {
+    const cartoes = this.cartoesSelecionados().filter((cartao) =>
+      Object.keys(this.carrinhoState.itens()).includes(String(cartao.id)),
+    );
+
+    if (cartoes[evento.lojaIndex]) {
+      this.carrinhoState.atualizarQuantidade(cartoes[evento.lojaIndex].id, evento.novaQuantidade);
+    }
+  }
+
+  onItemRemovido(lojaIndex: number): void {
+    const cartoes = this.cartoesSelecionados().filter((cartao) =>
+      Object.keys(this.carrinhoState.itens()).includes(String(cartao.id)),
+    );
+
+    if (cartoes[lojaIndex]) {
+      this.carrinhoState.removerItem(cartoes[lojaIndex].id);
+    }
   }
 }
