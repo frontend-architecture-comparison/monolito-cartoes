@@ -9,10 +9,11 @@
 <p align="center">
    <a href="http://localhost:4200" target="_blank">Demo local</a>.
 </p>
+
 <p align="center">
-  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/Alessandra-Nastassja/monolito-cartoes?color=%231f332c">
+  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/frontend-architecture-comparison/monolito-cartoes?color=%231f332c">
   <a href="https://github.com/Alessandra-Nastassja/monolito-cartoes/commits/main">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Alessandra-Nastassja/monolito-cartoes?color=%231f332c">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/frontend-architecture-comparison/monolito-cartoes?color=%231f332c">
   </a>
   <a href="https://www.linkedin.com/in/alessandra-nastassja/">
     <img alt="Made by Alessandra Nastassja" src="https://img.shields.io/badge/made%20by-AlessandraNastassja-%231f332c">
