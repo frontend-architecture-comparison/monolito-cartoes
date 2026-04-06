@@ -1,3 +1,27 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/05db2d45-2c54-48e9-a975-61c668792096/deploy-status)](https://app.netlify.com/sites/planer-future/deploys)
+
+<h1 align="center">
+  Monolito Cartoes
+</h1>
+<p align="center">
+  Aplicacao web de aquisicao de cartoes desenvolvida em Angular, com arquitetura monolitica.
+</p>
+<p align="center">
+   <a href="http://localhost:4200" target="_blank">Demo local</a>.
+</p>
+<p align="center">
+  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/Alessandra-Nastassja/monolito-cartoes?color=%231f332c">
+  <a href="https://github.com/Alessandra-Nastassja/monolito-cartoes/commits/main">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Alessandra-Nastassja/monolito-cartoes?color=%231f332c">
+  </a>
+  <a href="https://www.linkedin.com/in/alessandra-nastassja/">
+    <img alt="Made by Alessandra Nastassja" src="https://img.shields.io/badge/made%20by-AlessandraNastassja-%231f332c">
+  </a>
+</p>
+<p align="center">
+  <img alt="Demo da aplicacao" src="public/carrinho.png" width="220px">
+</p>
+
 # Monolito - Aplicacao de Aquisicao de Cartoes
 
 Repositorio contendo a implementacao de uma aplicacao web desenvolvida em arquitetura monolitica, como parte do Trabalho de Conclusao de Curso (TCC) em Engenharia de Software.
@@ -23,9 +47,9 @@ A aplicacao segue o modelo de arquitetura monolitica, estruturada em um unico pr
 #### **Core** (`src/app/core/`)
 Camada responsavel pela logica de negocio e acesso a dados:
 - **Models**: Definicoes de interfaces (`Cartao`, `ItemCarrinho`, `LojaCarrinho`)
-- **Services**: 
+- **Services**:
   - `ListaCartoes` - Busca e filtro de cartoes disponiveis
-  - `CarrinhoState` - Gerenciamento do estado do carrinho
+  - `CarrinhoState` - Gerenciamento do estado do carrinho (Signals)
 - **Data**: Mock database (`db.json`) com dados de cartoes
 
 #### **Features** (`src/app/features/`)
@@ -39,27 +63,32 @@ Modulos de funcionalidades especificas:
 
 **Carrinho** (`carrinho/`)
 - Visualizacao de itens selecionados
-- Componente `LojaCarrinhoCard` para renderizacao de lojas
-- Calculo automatico de totais
-- Persistencia de carrinho
+- Componente `LojaCarrinhoCard` para renderizacao de itens
+- Contador de quantidade por item (`+` e `-`)
+- Remocao de item por icone de lixeira
+- Calculo automatico de totais e quantidade
 
 #### **Shared** (`src/app/shared/`)
 Componentes e utilitarios reutilizaveis:
+- **Header** - Topo compartilhado com titulo dinamico, badge e voltar
 - **Loading** - Componente com animacao de carregamento
 - **Modal** - Componente generico para dialogos
+- **Quantity Selector** - Controle de quantidade reutilizavel
 
 ## Funcionalidades
 
 A aplicacao simula um sistema de aquisicao de cartoes com:
 
-- Listagem paginada de cartoes disponiveis com loading state
+- Listagem de cartoes disponiveis com loading state
 - Selecao e adicao de cartoes ao carrinho
-- Modal de confirmacao com detalhes completos do cartao
-- Visualizacao do carrinho com itens selecionados agrupados por loja
-- Calculo automatico de totais e quantidade de itens
+- Modal de confirmacao com detalhes do cartao
+- Visualizacao do carrinho com itens selecionados
+- Ajuste de quantidade por item no carrinho
+- Remocao de item por lixeira
+- Calculo automatico de total e quantidade
 - Formatacao monetaria em BRL com Intl.NumberFormat
-- Navegacao entre telas (home → carrinho → checkout)
-- Roteamento lazy-loaded para optimal performance
+- Navegacao entre telas (`home` e `carrinho`)
+- Roteamento lazy-loaded
 - Tipagem forte com TypeScript
 - Componentes standalone (Angular 21)
 
@@ -73,90 +102,52 @@ A aplicacao simula um sistema de aquisicao de cartoes com:
 | RxJS | ~7.8 | Programacao reativa |
 | Node.js | 20+ | Runtime JavaScript |
 | pnpm | 10+ | Gerenciador de pacotes |
-| json-server | - | Mock de API REST local |
+| json-server | 1.0.0-beta.15 | Mock de API REST local |
 | Vitest | ^4.0 | Testes unitarios |
 | Express | ^5.1 | Server-side rendering |
 
-
-
 ## Estrutura do Projeto
 
-```
+```text
 monolito-cartoes/
 ├── src/
 │   ├── app/
-│   │   ├── app.ts                          # Componente raiz
-│   │   ├── app.html                        # Template raiz
-│   │   ├── app.scss                        # Estilos globais
-│   │   ├── app.config.ts                   # Configuracao da app
-│   │   ├── app.routes.ts                   # Roteamento principal
-│   │   │
-│   │   ├── core/                           # Camada de negocio
+│   │   ├── app.ts
+│   │   ├── app.html
+│   │   ├── app.scss
+│   │   ├── app.config.ts
+│   │   ├── app.routes.ts
+│   │   ├── core/
 │   │   │   ├── models/
-│   │   │   │   └── cartao.model.ts         # Interface Cartao
+│   │   │   │   └── cartao.model.ts
 │   │   │   ├── services/
 │   │   │   │   ├── lista-cartoes/
-│   │   │   │   │   ├── lista-cartoes.ts
-│   │   │   │   │   └── lista-cartoes.spec.ts
 │   │   │   │   └── carrinho-state/
-│   │   │   │       └── carrinho-state.ts   # Gerenciamento de estado
 │   │   │   └── data/
-│   │   │       └── db.json                 # Mock data
-│   │   │
-│   │   ├── features/                       # Funcionalidades
+│   │   │       └── db.json
+│   │   ├── features/
 │   │   │   ├── cartoes/
-│   │   │   │   ├── cartoes.ts              # Componente principal
-│   │   │   │   ├── cartoes.html
-│   │   │   │   ├── cartoes.scss
-│   │   │   │   ├── cartoes.spec.ts
-│   │   │   │   ├── cartoes-module.ts
-│   │   │   │   └── components/
-│   │   │   │       └── card-cartao/        # Card individual
-│   │   │   │           ├── card-cartao.ts
-│   │   │   │           ├── card-cartao.html
-│   │   │   │           ├── card-cartao.scss
-│   │   │   │           └── card-cartao.spec.ts
-│   │   │   │
 │   │   │   └── carrinho/
-│   │   │       ├── carrinho.ts             # Componente carrinho
-│   │   │       ├── carrinho.html
-│   │   │       ├── carrinho.scss
-│   │   │       ├── carrinho.spec.ts
-│   │   │       ├── carrinho.model.ts       # Tipos carrinho
-│   │   │       ├── carrinho-module.ts
 │   │   │       └── components/
-│   │   │           └── loja-carrinho-card/ # Card de loja
-│   │   │               ├── loja-carrinho-card.ts
-│   │   │               ├── loja-carrinho-card.html
-│   │   │               ├── loja-carrinho-card.scss
-│   │   │               └── loja-carrinho-card.module.ts
-│   │   │
-│   │   └── shared/                         # Componentes compartilhados
+│   │   │           └── loja-carrinho-card/
+│   │   └── shared/
 │   │       └── components/
+│   │           ├── header/
 │   │           ├── loading/
-│   │           │   ├── loading.ts
-│   │           │   ├── loading.html
-│   │           │   └── loading.scss
-│   │           └── modal/
-│   │               ├── modal.ts
-│   │               ├── modal.html
-│   │               └── modal.scss
-│   │
-│   ├── main.ts                             # Entry point
-│   ├── main.server.ts                      # SSR entry point
-│   ├── server.ts                           # Express server
-│   └── styles.scss                         # Styles globais
-│
-├── public/                                 # Assets estaticos
-│   └── *.png                               # Screenshots
-│
-├── angular.json                            # Configuracao Angular CLI
-├── package.json                            # Dependencias e scripts
-├── tsconfig.json                           # Configuracao TypeScript
-├── tsconfig.app.json                       # Config TypeScript app
-├── tsconfig.spec.json                      # Config TypeScript tests
-├── pnpm-lock.yaml                          # Lock de dependencias
-└── README.md                               # Este arquivo
+│   │           ├── modal/
+│   │           └── quantity-selector/
+│   ├── main.ts
+│   ├── main.server.ts
+│   ├── server.ts
+│   └── styles.scss
+├── public/
+├── angular.json
+├── package.json
+├── tsconfig.json
+├── tsconfig.app.json
+├── tsconfig.spec.json
+├── pnpm-lock.yaml
+└── README.md
 ```
 
 ## Como Executar o Projeto
@@ -195,12 +186,6 @@ pnpm build
 
 Gera a build otimizada em `dist/monolito-cartoes/`
 
-### Server-Side Rendering
-
-```bash
-pnpm start:ssr
-```
-
 ### Testes
 
 Executar testes unitarios:
@@ -208,157 +193,41 @@ Executar testes unitarios:
 pnpm test
 ```
 
-**Arquivos de teste:**
-- `app.spec.ts` - Testes do componente raiz
-- `lista-cartoes.spec.ts` - Testes do servico
-- `cartoes.spec.ts` - Testes do componente cartoes
-- `carrinho.spec.ts` - Testes do componente carrinho
-- `card-cartao.spec.ts` - Testes do card
-
 ## Scripts Disponiveis
 
 | Script | Descricao |
 |--------|-----------|
 | `pnpm start` | Sobe servidor de desenvolvimento |
+| `pnpm dev` | Sobe frontend + json-server |
 | `pnpm build` | Gera build de producao |
 | `pnpm watch` | Build em modo observacao |
-
-
-## Fluxo de Dados
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     App (Root Component)                     │
-│                  Gerencia navegacao global                   │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-            ┌────────────┴────────────┐
-            ▼                         ▼
-      ┌──────────────┐         ┌──────────────┐
-      │ Cartoes      │         │ Carrinho     │
-      │ (home)       │         │ (details)    │
-      └────────┬─────┘         └────┬─────────┘
-               │                    │
-               ▼                    ▼
-        ┌─────────────┐      ┌─────────────┐
-        │CardCartao   │      │LojaCarrinho │
-        │Component    │      │ Card Componet
-        └──────┬──────┘      └─────────────┘
-               │
-         ┌─────┴──────┐
-         ▼            ▼
-    ┌────────┐  ┌─────────┐
-    │ Modal  │  │ Loading │
-    │Shared  │  │ Shared  │
-    └────────┘  └─────────┘
-
-SERVICES:
-  ┌──────────────────────────────────────┐
-  │ ListaCartoes (Core Service)          │
-  │ - Busca de cartoes                   │
-  │ - Filtros e paginacao                │
-  └──────────────────────────────────────┘
-  
-  ┌──────────────────────────────────────┐
-  │ CarrinhoState (Core Service)         │
-  │ - Gerenciamento de estado            │
-  │ - Calculo de totais                  │
-  └──────────────────────────────────────┘
-```
-
-## Componentes Principais
-
-### Cartoes Feature
-
-**`Cartoes` (Container)**
-- Responsavel por buscar e listar cartoes
-- Gerencia loading state
-- Usa servico `ListaCartoes`
-
-**`CardCartao` (Presentational)**
-- Exibe um cartao individual
-- Modal de confirmacao integrado
-- Formatacao de valores monetarios
-
-### Carrinho Feature
-
-**`Carrinho` (Container)**
-- Busca dados do carrinho pela rota
-- Calcula totais e quantidade de itens
-- Renderiza lista de lojas
-
-**`LojaCarrinhoCard` (Presentational)**
-- Exibe loja com seus itens
-- Renderiza grid de produtos
-- Calcula subtotais
-
-### Shared Components
-
-**`Loading`**
-- Animacao de carregamento reutilizavel
-- Customizavel com mensagem
-
-**`Modal`**
-- Dialogo generico reutilizavel
-- Slots para conteudo customizado
-- Controle de abertura/fechamento
+| `pnpm test` | Executa testes |
 
 ## Roteamento
 
-A aplicacao usa roteamento lazy-loaded para otimizar o bundle:
-
 ```typescript
-path: 'home'              → Cartoes (lazy-loaded)
-path: 'carrinho'          → Carrinho vazio
-path: 'carrinho/:id'      → Carrinho com items do cartao selecionado
-path: ''                  → Redirect para 'home'
+path: 'home'              -> Cartoes (lazy-loaded)
+path: 'carrinho'          -> Carrinho vazio
+path: 'carrinho/:id'      -> Carrinho com item selecionado
+path: ''                  -> Redirect para 'home'
 ```
 
 ## Dados Mock
 
 **API Local (json-server):**
-```
+```text
 GET /cartoes       - Lista de cartoes disponiveis
 GET /cartoes/:id   - Cartao especifico
 ```
 
-**Estrutura Cartao:**
-```typescript
-{
-  id: string;
-  nome: string;
-  img: string;
-  limiteTotal: number;
-  limitePromocional: number;
-  anuidade: number;
-}
-```
-
 ## Padroes Utilizados
 
-- **Signals** - State management moderno do Angular
-- **Services** - Separacao de responsabilidades
-- **Standalone Components** - Componentes modernos sem NgModule
-- **Lazy Loading** - Carregamento sob demanda de features
-- **Strong Typing** - TypeScript com tipos explicitos
-- **Reactive Programming** - RxJS para operacoes assincronas
-- **Feature-Based Organization** - Estrutura por funcionalidade
-- **DRY** - Componentes reutilizaveis (Card, Modal, Loading)
-
-## Testes
-
-A aplicacao inclui testes unitarios com Vitest:
-
-```bash
-# Executar todos os testes
-pnpm test
-
-# Modo watch
-pnpm test --watch
-
-# Com coverage
-pnpm test --coverage
-```
+- Signals para state management
+- Services para separacao de responsabilidades
+- Standalone Components
+- Lazy Loading
+- TypeScript com tipagem forte
+- Organizacao por feature
 
 ## Telas
 
@@ -374,8 +243,6 @@ Este projeto compoe o estudo comparativo entre abordagens arquiteturais no front
 
 - **Monolito** (este repositorio) - Aplicacao unica
 - **Micro Front-ends** (repositorio comparativo) - Multiplas aplicacoes
-
-O foco da analise e avaliar o impacto em manutencao, evolucao e organizacao do codigo ao longo do desenvolvimento.
 
 ## Versao
 
