@@ -19,7 +19,7 @@
   </a>
 </p>
 <p align="center">
-  <img alt="Demo da aplicacao" src="public/carrinho.png" width="220px">
+  <img alt="Demo da aplicacao" src="public/lista-cartoes.png" width="220px">
 </p>
 
 # Monolito - Aplicacao de Aquisicao de Cartoes
@@ -232,10 +232,10 @@ GET /cartoes/:id   - Cartao especifico
 ## Telas
 
 ### Home - Lista de Cartoes
-![Tela de Cartoes](public/lista-cartoes.png)
+<img alt="Demo da aplicacao" src="public/lista-cartoes.png" width="220px">
 
 ### Carrinho
-![Tela de Carrinho](public/carrinho.png)
+<img alt="Tela de Carrinho" src="public/carrinho.png" width="220px">
 
 ## Contexto Academico
 
