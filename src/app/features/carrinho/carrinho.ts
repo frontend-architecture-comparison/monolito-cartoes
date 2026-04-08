@@ -13,7 +13,7 @@ import { LojaCarrinhoCard } from './components/loja-carrinho-card/loja-carrinho-
   standalone: true,
   imports: [LojaCarrinhoCard],
   templateUrl: './carrinho.html',
-  styleUrl: './carrinho.scss',
+  styleUrls: ['./carrinho.scss'],
 })
 export class Carrinho {
   private readonly route = inject(ActivatedRoute);

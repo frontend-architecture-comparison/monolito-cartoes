@@ -4,7 +4,7 @@ import { Component, input, output } from '@angular/core';
   selector: 'app-quantity-selector',
   standalone: true,
   templateUrl: './quantity-selector.html',
-  styleUrl: './quantity-selector.scss',
+  styleUrls: ['./quantity-selector.scss'],
 })
 export class QuantitySelectorComponent {
   quantity = input(1);

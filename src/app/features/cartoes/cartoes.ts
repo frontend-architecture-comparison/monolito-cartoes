@@ -9,7 +9,7 @@ import { LoadingComponent } from '../../shared/components/loading/loading';
   standalone: true,
   imports: [CardCartao, LoadingComponent],
   templateUrl: './cartoes.html',
-  styleUrl: './cartoes.scss',
+  styleUrls: ['./cartoes.scss'],
 })
 export class Cartoes {
 

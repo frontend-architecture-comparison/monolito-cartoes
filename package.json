@@ -1,43 +1,44 @@
 {
-  "name": "monolito-cartoes",
+  "name": "monolito-cartoes-1",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "predev": "kill-port 4200 3000",
+    "mock": "json-server src/app/core/data/db.json --port 3000",
     "dev": "concurrently -k \"ng serve --port 4200\" \"json-server src/app/core/data/db.json --port 3000\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:monolito-cartoes": "node dist/monolito-cartoes/server/server.mjs"
+    "test": "ng test"
   },
   "private": true,
-  "packageManager": "pnpm@10.20.0",
   "dependencies": {
-    "@angular/common": "^21.2.0",
-    "@angular/compiler": "^21.2.0",
-    "@angular/core": "^21.2.0",
-    "@angular/forms": "^21.2.0",
-    "@angular/platform-browser": "^21.2.0",
-    "@angular/platform-server": "^21.2.0",
-    "@angular/router": "^21.2.0",
-    "@angular/ssr": "^21.2.5",
-    "express": "^5.1.0",
+    "@angular/animations": "^17.3.12",
+    "@angular/common": "^17.3.12",
+    "@angular/compiler": "^17.3.12",
+    "@angular/core": "^17.3.12",
+    "@angular/forms": "^17.3.12",
+    "@angular/platform-browser": "^17.3.12",
+    "@angular/platform-browser-dynamic": "^17.3.12",
+    "@angular/router": "^17.3.12",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.10"
   },
   "devDependencies": {
-    "@angular/build": "^21.2.5",
-    "@angular/cli": "^21.2.5",
-    "@angular/compiler-cli": "^21.2.0",
-    "@types/express": "^5.0.1",
-    "@types/node": "^20.17.19",
     "concurrently": "^9.2.1",
-    "jsdom": "^28.0.0",
+    "@angular-devkit/build-angular": "^17.3.17",
+    "@angular/cli": "~17.3.17",
+    "@angular/compiler-cli": "^17.3.12",
+    "@types/jasmine": "~4.3.0",
+    "jasmine-core": "~4.5.0",
     "json-server": "1.0.0-beta.15",
+    "karma": "~6.4.0",
     "kill-port": "^2.0.1",
-    "prettier": "^3.8.1",
-    "typescript": "~5.9.2",
-    "vitest": "^4.0.8"
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    "typescript": "~5.4.5"
   }
 }

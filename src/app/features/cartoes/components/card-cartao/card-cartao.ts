@@ -9,7 +9,7 @@ import { ModalComponent } from '@shared/components/modal/modal';
   standalone: true,
   imports: [CurrencyPipe, ModalComponent],
   templateUrl: './card-cartao.html',
-  styleUrl: './card-cartao.scss',
+  styleUrls: ['./card-cartao.scss'],
 })
 export class CardCartao {
   private readonly router = inject(Router);
@@ -30,8 +30,7 @@ export class CardCartao {
   }
 
   selectCartao(): void {
-    alert(`Cartão selecionado: ${this.cartao().nome}`);
-    this.fecharModal();
+    this.irParaCarrinho();
   }
 
   irParaCarrinho(): void {

@@ -8,7 +8,7 @@ import { QuantitySelectorComponent } from '@shared/components/quantity-selector/
   standalone: true,
   imports: [CommonModule, QuantitySelectorComponent],
   templateUrl: './loja-carrinho-card.html',
-  styleUrl: './loja-carrinho-card.scss',
+  styleUrls: ['./loja-carrinho-card.scss'],
 })
 export class LojaCarrinhoCard {
   loja = input.required<LojaCarrinho>();

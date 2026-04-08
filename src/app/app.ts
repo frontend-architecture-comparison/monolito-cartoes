@@ -10,7 +10,7 @@ import { HeaderComponent } from '@shared/components/header/header';
   standalone: true,
   imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrls: ['./app.scss']
 })
 export class App {
   private readonly router = inject(Router);
