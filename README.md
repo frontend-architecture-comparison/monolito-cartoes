@@ -97,15 +97,17 @@ A aplicacao simula um sistema de aquisicao de cartoes com:
 
 | Tecnologia | Versao | Proposito |
 |-----------|--------|----------|
-| Angular | 21 | Framework frontend |
-| TypeScript | ~5.9 | Linguagem de programacao |
+| Angular | 21.2.7 | Framework frontend |
+| Angular CLI / DevKit | 21.2.7 | Build e tooling |
+| TypeScript | ~6.0.2 | Linguagem de programacao |
 | SCSS | - | Pre-processador CSS |
 | RxJS | ~7.8 | Programacao reativa |
+| Zone.js | ~0.15.1 | Runtime de change detection |
 | Node.js | 20+ | Runtime JavaScript |
-| pnpm | 10+ | Gerenciador de pacotes |
+| npm | 10+ | Gerenciador de pacotes |
 | json-server | 1.0.0-beta.15 | Mock de API REST local |
-| Vitest | ^4.0 | Testes unitarios |
-| Express | ^5.1 | Server-side rendering |
+| Karma + Jasmine | 6.4 / 4.5 | Testes unitarios |
+| concurrently + kill-port | 9.2.1 / 2.0.1 | Execucao local (frontend + mock) |
 
 ## Estrutura do Projeto
 
@@ -147,7 +149,7 @@ monolito-cartoes/
 ├── tsconfig.json
 ├── tsconfig.app.json
 ├── tsconfig.spec.json
-├── pnpm-lock.yaml
+├── package-lock.json
 └── README.md
 ```
 
@@ -156,25 +158,25 @@ monolito-cartoes/
 ### Pre-requisitos
 
 - Node.js 20+
-- pnpm 10+
+- npm 10+
 
 ### Instalacao de Dependencias
 
 ```bash
-pnpm install
+npm install
 ```
 
 ### Desenvolvimento
 
 **Apenas frontend (Angular):**
 ```bash
-pnpm start
+npm start
 ```
 Acesse: `http://localhost:4200`
 
 **Frontend + Mock API (recomendado):**
 ```bash
-pnpm dev
+npm run dev
 ```
 - Frontend: `http://localhost:4200`
 - Mock API: `http://localhost:3000`
@@ -182,7 +184,7 @@ pnpm dev
 ### Build de Producao
 
 ```bash
-pnpm build
+npm run build
 ```
 
 Gera a build otimizada em `dist/monolito-cartoes/`
@@ -191,18 +193,18 @@ Gera a build otimizada em `dist/monolito-cartoes/`
 
 Executar testes unitarios:
 ```bash
-pnpm test
+npm test
 ```
 
 ## Scripts Disponiveis
 
 | Script | Descricao |
 |--------|-----------|
-| `pnpm start` | Sobe servidor de desenvolvimento |
-| `pnpm dev` | Sobe frontend + json-server |
-| `pnpm build` | Gera build de producao |
-| `pnpm watch` | Build em modo observacao |
-| `pnpm test` | Executa testes |
+| `npm start` | Sobe servidor de desenvolvimento |
+| `npm run dev` | Sobe frontend + json-server |
+| `npm run build` | Gera build de producao |
+| `npm run watch` | Build em modo observacao |
+| `npm test` | Executa testes |
 
 ## Roteamento
 
@@ -247,10 +249,10 @@ Este projeto compoe o estudo comparativo entre abordagens arquiteturais no front
 
 ## Versao
 
-- **Angular**: 21
-- **TypeScript**: 5.9
+- **Angular**: 21.2.7
+- **TypeScript**: 6.0.2
 - **Node**: 20+
-- **pnpm**: 10+
+- **npm**: 10+
 
 ## Contribuicao
 
