@@ -1,15 +1,14 @@
 import { Component, input } from '@angular/core';
 
 @Component({
-  selector: 'app-loading',
-  standalone: true,
-  imports: [],
-  template: `
+    selector: 'app-loading',
+    imports: [],
+    template: `
     <div class="loading">
       <p>{{ message() }}</p>
     </div>
   `,
-  styles: [`
+    styles: [`
     .loading {
       display: flex;
       justify-content: center;
@@ -32,7 +31,7 @@ import { Component, input } from '@angular/core';
         opacity: 0.5;
       }
     }
-  `],
+  `]
 })
 export class LoadingComponent {
   message = input('Carregando...');

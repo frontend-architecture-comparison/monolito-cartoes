@@ -6,11 +6,10 @@ import { CarrinhoState } from '@core/services/carrinho-state/carrinho-state';
 import { HeaderComponent } from '@shared/components/header/header';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, HeaderComponent],
-  templateUrl: './app.html',
-  styleUrls: ['./app.scss']
+    selector: 'app-root',
+    imports: [RouterOutlet, HeaderComponent],
+    templateUrl: './app.html',
+    styleUrls: ['./app.scss']
 })
 export class App {
   private readonly router = inject(Router);

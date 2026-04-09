@@ -1,3 +1,4 @@
+import { provideZoneChangeDetection } from "@angular/core";
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -6,5 +7,5 @@ import { App } from './app/app';
 
 registerLocaleData(localePt, 'pt-BR');
 
-bootstrapApplication(App, appConfig)
+bootstrapApplication(App, {...appConfig, providers: [provideZoneChangeDetection(), ...appConfig.providers]})
   .catch((err) => console.error(err));

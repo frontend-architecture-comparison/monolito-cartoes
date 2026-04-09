@@ -5,11 +5,10 @@ import { Cartao } from '@core/models/cartao.model';
 import { ModalComponent } from '@shared/components/modal/modal';
 
 @Component({
-  selector: 'app-card-cartao',
-  standalone: true,
-  imports: [CurrencyPipe, ModalComponent],
-  templateUrl: './card-cartao.html',
-  styleUrls: ['./card-cartao.scss'],
+    selector: 'app-card-cartao',
+    imports: [CurrencyPipe, ModalComponent],
+    templateUrl: './card-cartao.html',
+    styleUrls: ['./card-cartao.scss']
 })
 export class CardCartao {
   private readonly router = inject(Router);

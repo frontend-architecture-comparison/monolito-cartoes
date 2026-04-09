@@ -1,7 +1,7 @@
-import { LOCALE_ID } from '@angular/core';
+import { LOCALE_ID, ApplicationConfig } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import { ApplicationConfig } from '@angular/platform-browser';
+
 
 import { routes } from './app.routes';
 
