@@ -1,14 +1,13 @@
 import { Component, input, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { LojaCarrinho } from '../../carrinho.model';
 import { QuantitySelectorComponent } from '@shared/components/quantity-selector/quantity-selector';
 
 @Component({
-  selector: 'app-loja-carrinho-card',
-  standalone: true,
-  imports: [CommonModule, QuantitySelectorComponent],
-  templateUrl: './loja-carrinho-card.html',
-  styleUrl: './loja-carrinho-card.scss',
+    selector: 'app-loja-carrinho-card',
+    imports: [QuantitySelectorComponent],
+    templateUrl: './loja-carrinho-card.html',
+    styleUrls: ['./loja-carrinho-card.scss']
 })
 export class LojaCarrinhoCard {
   loja = input.required<LojaCarrinho>();

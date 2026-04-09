@@ -9,11 +9,10 @@ import { LojaCarrinho } from './carrinho.model';
 import { LojaCarrinhoCard } from './components/loja-carrinho-card/loja-carrinho-card';
 
 @Component({
-  selector: 'app-carrinho',
-  standalone: true,
-  imports: [LojaCarrinhoCard],
-  templateUrl: './carrinho.html',
-  styleUrl: './carrinho.scss',
+    selector: 'app-carrinho',
+    imports: [LojaCarrinhoCard],
+    templateUrl: './carrinho.html',
+    styleUrls: ['./carrinho.scss']
 })
 export class Carrinho {
   private readonly route = inject(ActivatedRoute);

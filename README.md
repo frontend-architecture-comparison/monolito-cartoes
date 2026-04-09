@@ -1,265 +1,27 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/05db2d45-2c54-48e9-a975-61c668792096/deploy-status)](https://app.netlify.com/sites/planer-future/deploys)
+# MonolitoCartoes1
 
-<h1 align="center">
-  Monolito Cartoes
-</h1>
-<p align="center">
-  Aplicacao web de aquisicao de cartoes desenvolvida em Angular, com arquitetura monolitica.
-</p>
-<p align="center">
-   <a href="http://localhost:4200" target="_blank">Demo local</a>.
-</p>
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.11.
 
-<p align="center">
-  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/frontend-architecture-comparison/monolito-cartoes?color=%231f332c">
-  <a href="https://github.com/Alessandra-Nastassja/monolito-cartoes/commits/main">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/frontend-architecture-comparison/monolito-cartoes?color=%231f332c">
-  </a>
-  <a href="https://www.linkedin.com/in/alessandra-nastassja/">
-    <img alt="Made by Alessandra Nastassja" src="https://img.shields.io/badge/made%20by-AlessandraNastassja-%231f332c">
-  </a>
-</p>
-<p align="center">
-  <img alt="Demo da aplicacao" src="public/lista-cartoes.png" width="220px">
-</p>
+## Development server
 
-# Monolito - Aplicacao de Aquisicao de Cartoes
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-Repositorio contendo a implementacao de uma aplicacao web desenvolvida em arquitetura monolitica, como parte do Trabalho de Conclusao de Curso (TCC) em Engenharia de Software.
+## Code scaffolding
 
-## Objetivo
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-A aplicacao foi desenvolvida como base para comparacao com uma arquitetura baseada em micro front-ends, permitindo analise de aspectos relacionados a desempenho, escalabilidade e organizacao estrutural.
+## Build
 
-## Arquitetura
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-A aplicacao segue o modelo de arquitetura monolitica, estruturada em um unico projeto Angular com organizacao interna baseada em modulos por funcionalidade (feature-based).
+## Running unit tests
 
-**Caracteristicas principais:**
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-- Aplicacao unica (single application)
-- Build e deploy unificados
-- Modulos internos organizados por dominio
-- Componentes reutilizaveis em camadas compartilhadas
-- Alto acoplamento entre as partes da aplicacao
+## Running end-to-end tests
 
-### Organizacao em Camadas
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-#### **Core** (`src/app/core/`)
-Camada responsavel pela logica de negocio e acesso a dados:
-- **Models**: Definicoes de interfaces (`Cartao`, `ItemCarrinho`, `LojaCarrinho`)
-- **Services**:
-  - `ListaCartoes` - Busca e filtro de cartoes disponiveis
-  - `CarrinhoState` - Gerenciamento do estado do carrinho (Signals)
-- **Data**: Mock database (`db.json`) com dados de cartoes
+## Further help
 
-#### **Features** (`src/app/features/`)
-Modulos de funcionalidades especificas:
-
-**Cartoes** (`cartoes/`)
-- Listagem de cartoes disponiveis
-- Componente `CardCartao` para exibicao individual
-- Modal de confirmacao de selecao
-- Loading state durante carregamento
-
-**Carrinho** (`carrinho/`)
-- Visualizacao de itens selecionados
-- Componente `LojaCarrinhoCard` para renderizacao de itens
-- Contador de quantidade por item (`+` e `-`)
-- Remocao de item por icone de lixeira
-- Calculo automatico de totais e quantidade
-
-#### **Shared** (`src/app/shared/`)
-Componentes e utilitarios reutilizaveis:
-- **Header** - Topo compartilhado com titulo dinamico, badge e voltar
-- **Loading** - Componente com animacao de carregamento
-- **Modal** - Componente generico para dialogos
-- **Quantity Selector** - Controle de quantidade reutilizavel
-
-## Funcionalidades
-
-A aplicacao simula um sistema de aquisicao de cartoes com:
-
-- Listagem de cartoes disponiveis com loading state
-- Selecao e adicao de cartoes ao carrinho
-- Modal de confirmacao com detalhes do cartao
-- Visualizacao do carrinho com itens selecionados
-- Ajuste de quantidade por item no carrinho
-- Remocao de item por lixeira
-- Calculo automatico de total e quantidade
-- Formatacao monetaria em BRL com Intl.NumberFormat
-- Navegacao entre telas (`home` e `carrinho`)
-- Roteamento lazy-loaded
-- Tipagem forte com TypeScript
-- Componentes standalone (Angular 21)
-
-## Tecnologias Utilizadas
-
-| Tecnologia | Versao | Proposito |
-|-----------|--------|----------|
-| Angular | 21 | Framework frontend |
-| TypeScript | ~5.9 | Linguagem de programacao |
-| SCSS | - | Pre-processador CSS |
-| RxJS | ~7.8 | Programacao reativa |
-| Node.js | 20+ | Runtime JavaScript |
-| pnpm | 10+ | Gerenciador de pacotes |
-| json-server | 1.0.0-beta.15 | Mock de API REST local |
-| Vitest | ^4.0 | Testes unitarios |
-| Express | ^5.1 | Server-side rendering |
-
-## Estrutura do Projeto
-
-```text
-monolito-cartoes/
-├── src/
-│   ├── app/
-│   │   ├── app.ts
-│   │   ├── app.html
-│   │   ├── app.scss
-│   │   ├── app.config.ts
-│   │   ├── app.routes.ts
-│   │   ├── core/
-│   │   │   ├── models/
-│   │   │   │   └── cartao.model.ts
-│   │   │   ├── services/
-│   │   │   │   ├── lista-cartoes/
-│   │   │   │   └── carrinho-state/
-│   │   │   └── data/
-│   │   │       └── db.json
-│   │   ├── features/
-│   │   │   ├── cartoes/
-│   │   │   └── carrinho/
-│   │   │       └── components/
-│   │   │           └── loja-carrinho-card/
-│   │   └── shared/
-│   │       └── components/
-│   │           ├── header/
-│   │           ├── loading/
-│   │           ├── modal/
-│   │           └── quantity-selector/
-│   ├── main.ts
-│   ├── main.server.ts
-│   ├── server.ts
-│   └── styles.scss
-├── public/
-├── angular.json
-├── package.json
-├── tsconfig.json
-├── tsconfig.app.json
-├── tsconfig.spec.json
-├── pnpm-lock.yaml
-└── README.md
-```
-
-## Como Executar o Projeto
-
-### Pre-requisitos
-
-- Node.js 20+
-- pnpm 10+
-
-### Instalacao de Dependencias
-
-```bash
-pnpm install
-```
-
-### Desenvolvimento
-
-**Apenas frontend (Angular):**
-```bash
-pnpm start
-```
-Acesse: `http://localhost:4200`
-
-**Frontend + Mock API (recomendado):**
-```bash
-pnpm dev
-```
-- Frontend: `http://localhost:4200`
-- Mock API: `http://localhost:3000`
-
-### Build de Producao
-
-```bash
-pnpm build
-```
-
-Gera a build otimizada em `dist/monolito-cartoes/`
-
-### Testes
-
-Executar testes unitarios:
-```bash
-pnpm test
-```
-
-## Scripts Disponiveis
-
-| Script | Descricao |
-|--------|-----------|
-| `pnpm start` | Sobe servidor de desenvolvimento |
-| `pnpm dev` | Sobe frontend + json-server |
-| `pnpm build` | Gera build de producao |
-| `pnpm watch` | Build em modo observacao |
-| `pnpm test` | Executa testes |
-
-## Roteamento
-
-```typescript
-path: 'home'              -> Cartoes (lazy-loaded)
-path: 'carrinho'          -> Carrinho vazio
-path: 'carrinho/:id'      -> Carrinho com item selecionado
-path: ''                  -> Redirect para 'home'
-```
-
-## Dados Mock
-
-**API Local (json-server):**
-```text
-GET /cartoes       - Lista de cartoes disponiveis
-GET /cartoes/:id   - Cartao especifico
-```
-
-## Padroes Utilizados
-
-- Signals para state management
-- Services para separacao de responsabilidades
-- Standalone Components
-- Lazy Loading
-- TypeScript com tipagem forte
-- Organizacao por feature
-
-## Telas
-
-### Home - Lista de Cartoes
-<img alt="Demo da aplicacao" src="public/lista-cartoes.png" width="220px">
-
-### Carrinho
-<img alt="Tela de Carrinho" src="public/carrinho.png" width="220px">
-
-## Contexto Academico
-
-Este projeto compoe o estudo comparativo entre abordagens arquiteturais no frontend:
-
-- **Monolito** (este repositorio) - Aplicacao unica
-- **Micro Front-ends** (repositorio comparativo) - Multiplas aplicacoes
-
-## Versao
-
-- **Angular**: 21
-- **TypeScript**: 5.9
-- **Node**: 20+
-- **pnpm**: 10+
-
-## Contribuicao
-
-Este e um projeto academico de TCC. Para duvidas ou sugestoes, consulte a documentacao do projeto.
-
-## Contato
-
-Para informacoes sobre este projeto, entre em contato com o desenvolvedor responsavel pelo TCC.
-
----
-
-**Ultima atualizacao:** Abril de 2026
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

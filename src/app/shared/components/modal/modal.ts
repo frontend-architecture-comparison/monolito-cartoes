@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
   selector: 'app-modal',
   standalone: true,
   templateUrl: './modal.html',
-  styleUrl: './modal.scss',
+  styleUrls: ['./modal.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent {

@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
   selector: 'app-header',
   standalone: true,
   templateUrl: './header.html',
-  styleUrl: './header.scss',
+  styleUrls: ['./header.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {

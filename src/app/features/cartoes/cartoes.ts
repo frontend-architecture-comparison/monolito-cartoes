@@ -5,11 +5,10 @@ import { Cartao } from '@core/models/cartao.model';
 import { LoadingComponent } from '../../shared/components/loading/loading';
 
 @Component({
-  selector: 'app-cartoes',
-  standalone: true,
-  imports: [CardCartao, LoadingComponent],
-  templateUrl: './cartoes.html',
-  styleUrl: './cartoes.scss',
+    selector: 'app-cartoes',
+    imports: [CardCartao, LoadingComponent],
+    templateUrl: './cartoes.html',
+    styleUrls: ['./cartoes.scss']
 })
 export class Cartoes {
 
