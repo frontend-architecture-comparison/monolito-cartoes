@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 
 import { Cartoes } from './cartoes';
+import { ListaCartoes } from '../../core/services/lista-cartoes/lista-cartoes';
 
 describe('Cartoes', () => {
   let component: Cartoes;
@@ -9,11 +11,18 @@ describe('Cartoes', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Cartoes],
+      providers: [
+        {
+          provide: ListaCartoes,
+          useValue: {
+            getlistaCartoes: () => of([]),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Cartoes);
     component = fixture.componentInstance;
-    await fixture.whenStable();
   });
 
   it('should create', () => {

@@ -1,6 +1,7 @@
-import { computed, Component, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Subscription } from 'rxjs';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { Cartao } from '@core/models/cartao.model';
 import { ListaCartoes } from '@core/services/lista-cartoes/lista-cartoes';
@@ -10,22 +11,84 @@ import { LojaCarrinhoCard } from './components/loja-carrinho-card/loja-carrinho-
 
 @Component({
     selector: 'app-carrinho',
-    imports: [LojaCarrinhoCard],
+    standalone: true,
+    imports: [CommonModule, LojaCarrinhoCard],
     templateUrl: './carrinho.html',
     styleUrls: ['./carrinho.scss']
 })
-export class Carrinho {
+export class Carrinho implements OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly listaCartoes = inject(ListaCartoes);
   private readonly carrinhoState = inject(CarrinhoState);
+  private readonly subscriptions = new Subscription();
   private ultimoIdProcessado: string | null = null;
 
-  readonly loading = signal(true);
-  readonly erro = signal(false);
-  readonly cartoesSelecionados = signal<Cartao[]>([]);
+  private _loading = true;
+  private _erro = false;
+  private _cartoesSelecionados: Cartao[] = [];
 
-  readonly lojas = computed<LojaCarrinho[]>(() => {
-    const cartoes = this.cartoesSelecionados();
+  constructor() {
+    this.subscriptions.add(
+      this.route.paramMap
+        .pipe(
+          map((params) => params.get('id')),
+          switchMap((id) => {
+            if (id && id !== this.ultimoIdProcessado) {
+              this.ultimoIdProcessado = id;
+              this.carrinhoState.adicionarItem(id);
+            }
+
+            const idsSelecionados = Object.keys(this.carrinhoState.itens());
+
+            if (idsSelecionados.length === 0) {
+              this._erro = false;
+              this._loading = false;
+              this._cartoesSelecionados = [];
+              return of([] as Cartao[]);
+            }
+
+            this._loading = true;
+            this._erro = false;
+
+            return this.listaCartoes.getlistaCartoes().pipe(
+              map((cartoes) =>
+                cartoes.filter((cartao) =>
+                  idsSelecionados.includes(String(cartao.id)),
+                ),
+              ),
+              catchError((error) => {
+                console.error('Erro ao carregar cartao selecionado:', error);
+                this._erro = true;
+                return of([] as Cartao[]);
+              }),
+            );
+          }),
+        )
+        .subscribe((cartoes) => {
+          this._cartoesSelecionados = cartoes;
+          this._loading = false;
+        }),
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  loading(): boolean {
+    return this._loading;
+  }
+
+  erro(): boolean {
+    return this._erro;
+  }
+
+  cartoesSelecionados(): Cartao[] {
+    return this._cartoesSelecionados;
+  }
+
+  lojas(): LojaCarrinho[] {
+    const cartoes = this._cartoesSelecionados;
     const itensCarrinho = this.carrinhoState.itens();
     const idsSelecionados = Object.keys(itensCarrinho);
 
@@ -52,63 +115,20 @@ export class Carrinho {
         ],
       };
     });
-  });
+  }
 
-  readonly totalSelecionado = computed(() =>
-    this.lojas().reduce(
+  totalSelecionado(): number {
+    return this.lojas().reduce(
       (total, loja) => total + loja.itens.reduce((soma, item) => soma + item.anuidade * item.quantidade * 12, 0),
       0,
-    ),
-  );
+    );
+  }
 
-  readonly itensSelecionados = computed(() =>
-    this.lojas().reduce(
+  itensSelecionados(): number {
+    return this.lojas().reduce(
       (total, loja) => total + loja.itens.reduce((soma, item) => soma + item.quantidade, 0),
       0,
-    ),
-  );
-
-  constructor() {
-    this.route.paramMap
-      .pipe(
-        map((params) => params.get('id')),
-        switchMap((id) => {
-          if (id && id !== this.ultimoIdProcessado) {
-            this.ultimoIdProcessado = id;
-            this.carrinhoState.adicionarItem(id);
-          }
-
-          const idsSelecionados = Object.keys(this.carrinhoState.itens());
-
-          if (idsSelecionados.length === 0) {
-            this.erro.set(false);
-            this.loading.set(false);
-            this.cartoesSelecionados.set([]);
-            return of([] as Cartao[]);
-          }
-
-          this.loading.set(true);
-          this.erro.set(false);
-
-          return this.listaCartoes.getlistaCartoes().pipe(
-            map((cartoes) =>
-              cartoes.filter((cartao) =>
-                idsSelecionados.includes(String(cartao.id)),
-              ),
-            ),
-            catchError((error) => {
-              console.error('Erro ao carregar cartao selecionado:', error);
-              this.erro.set(true);
-              return of([] as Cartao[]);
-            }),
-          );
-        }),
-        takeUntilDestroyed(),
-      )
-      .subscribe((cartoes) => {
-        this.cartoesSelecionados.set(cartoes);
-        this.loading.set(false);
-      });
+    );
   }
 
   formatarMoeda(valor: number): string {
@@ -125,7 +145,7 @@ export class Carrinho {
   }
 
   onQuantidadeAlterada(evento: { lojaIndex: number; novaQuantidade: number }): void {
-    const cartoes = this.cartoesSelecionados().filter((cartao) =>
+    const cartoes = this._cartoesSelecionados.filter((cartao) =>
       Object.keys(this.carrinhoState.itens()).includes(String(cartao.id)),
     );
 
@@ -135,7 +155,7 @@ export class Carrinho {
   }
 
   onItemRemovido(lojaIndex: number): void {
-    const cartoes = this.cartoesSelecionados().filter((cartao) =>
+    const cartoes = this._cartoesSelecionados.filter((cartao) =>
       Object.keys(this.carrinhoState.itens()).includes(String(cartao.id)),
     );
 

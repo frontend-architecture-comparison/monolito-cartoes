@@ -13,7 +13,6 @@ describe('CardCartao', () => {
 
     fixture = TestBed.createComponent(CardCartao);
     component = fixture.componentInstance;
-    await fixture.whenStable();
   });
 
   it('should create', () => {

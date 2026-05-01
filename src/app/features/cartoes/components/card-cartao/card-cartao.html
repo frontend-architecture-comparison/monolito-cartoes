@@ -2,45 +2,45 @@
   <header>
     <div>
       <img
-        [src]="cartao().img"
-        [alt]="cartao().nome" />
+        [src]="cartao.img"
+        [alt]="cartao.nome" />
     </div>
-    <p>{{ cartao().nome }}</p>
+    <p>{{ cartao.nome }}</p>
   </header>
 
   <section class="content-fatura">
     <article>
       <p>Limite total</p>
-      <p>{{ cartao().limiteTotal | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
+      <p>{{ cartao.limiteTotal | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
     </article>
 
     <article>
       <p>Limite promocional</p>
-      <p>{{ cartao().limitePromocional | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
+      <p>{{ cartao.limitePromocional | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
     </article>
   </section>
 
   <section class="content-anuidade">
     <p>Anuidade</p>
-    <p>12x {{ cartao().anuidade | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
+    <p>12x {{ cartao.anuidade | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
   </section>
 
   <button (click)="redirectToCarrinho()">Selecionar este cartão</button>
 </section>
 
 <app-modal
-  [open]="modalAberto()"
+  [open]="modalAberto"
   [title]="'Confirmar seleção'"
   (closed)="fecharModal()"
 >
   <section class="content-modal">
     <header style="display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 1rem;">
-      <img [src]="cartao().img" [alt]="cartao().nome" width="70%" />
-      <p>{{ cartao().nome }}</p>
+      <img [src]="cartao.img" [alt]="cartao.nome" width="70%" />
+      <p>{{ cartao.nome }}</p>
     </header>
   
     <article>
-      <p>12x {{ cartao().anuidade | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
+      <p>12x {{ cartao.anuidade | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
       <small>Anuidade</small>
     </article>
   

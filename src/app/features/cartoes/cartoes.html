@@ -1,15 +1,17 @@
 <section class="lista-cartoes">
   <h1>Cartões disponíveis</h1>
 
-  @if (loading()) {
+  <ng-container *ngIf="loading(); else cartoesDisponiveis">
     <app-loading message="Carregando cartões..." />
-  } @else {
-    @if (cartoes().length > 0) {
-      @for (cartao of cartoes(); track cartao.id) {
-        <app-card-cartao [cartao]="cartao" />
-      }
-    } @else {
+  </ng-container>
+
+  <ng-template #cartoesDisponiveis>
+    <ng-container *ngIf="cartoes().length > 0; else nenhumCartao">
+      <app-card-cartao *ngFor="let cartao of cartoes()" [cartao]="cartao" />
+    </ng-container>
+
+    <ng-template #nenhumCartao>
       <p>Nenhum cartão disponível.</p>
-    }
-  }
+    </ng-template>
+  </ng-template>
 </section>

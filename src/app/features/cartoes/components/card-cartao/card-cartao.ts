@@ -1,11 +1,12 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cartao } from '@core/models/cartao.model';
 import { ModalComponent } from '@shared/components/modal/modal';
 
 @Component({
     selector: 'app-card-cartao',
+    standalone: true,
     imports: [CurrencyPipe, ModalComponent],
     templateUrl: './card-cartao.html',
     styleUrls: ['./card-cartao.scss']
@@ -13,19 +14,20 @@ import { ModalComponent } from '@shared/components/modal/modal';
 export class CardCartao {
   private readonly router = inject(Router);
 
-  cartao = input.required<Cartao>();
-  modalAberto = signal(false);
+  @Input() cartao!: Cartao;
+  modalAberto = false;
+  @Output() readonly cartaoSelecionado = new EventEmitter<void>();
 
   redirectToCarrinho(): void {
-    this.router.navigate(['/carrinho', this.cartao().id]);
+    this.router.navigate(['/carrinho', this.cartao.id]);
   }
 
   abrirModal(): void {
-    this.modalAberto.set(true);
+    this.modalAberto = true;
   }
 
   fecharModal(): void {
-    this.modalAberto.set(false);
+    this.modalAberto = false;
   }
 
   selectCartao(): void {
@@ -34,6 +36,7 @@ export class CardCartao {
 
   irParaCarrinho(): void {
     this.fecharModal();
-    this.router.navigate(['/carrinho', this.cartao().id]);
+    this.router.navigate(['/carrinho', this.cartao.id]);
+    this.cartaoSelecionado.emit();
   }
 }
